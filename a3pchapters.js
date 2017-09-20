@@ -110,6 +110,7 @@
 	//Chapters list
 	getChaptersList(addSelect,console.log);
 	//Autoplay
+	$('a.play').click();
 	setInterval(checkEnd,2000);
 
 })();
