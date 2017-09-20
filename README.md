@@ -1,5 +1,5 @@
 # atresplayerChaptersJS
-Tampermonkey script for selecting any chapter of a tv show from another one in ATRESPLAYER
+Tampermonkey script for selecting any episode of a tv show from another episode in ATRESPLAYER
 
 # How to use it
 - Install Tampermonkey or Greasemonkey on your web browser (Tested on Chrome 60 running Tampermonkey)
