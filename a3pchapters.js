@@ -61,7 +61,7 @@
 
 
 	function createSelect(season){
-		let selectText = '<select style="width: 170px;padding: 0.8em;border-radius: 0.5em;border: none;color: white;font-size: 1.7em;background-color: #333;margin: 5px 5px;" onChange="window.location.href=this.value">'
+		let selectText = '<select style="width: 170px;padding: 0.8em;border-radius: 0.5em;border: none;color: white;font-size: 1.7em;background-color: #333;margin: 5px 5px; cursor:pointer" onChange="window.location.href=this.value">'
 		selectText += '<option >'+season.name+'</option>';
 		for(let chapter of season.chapters.reverse()){
 			selectText += `<option value="${chapter.hrefHtml}">${chapter.title}</option>`;
