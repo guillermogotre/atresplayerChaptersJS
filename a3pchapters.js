@@ -76,7 +76,9 @@
 		for(let season of chaptersList){
 			options += createSelect(season);
 		}
-		$('section.mod_player_top').append($(options));
+		let parent = $('section.mod_player_top');
+		let width = parent.width();
+		parent.append($(`<div><br><br><br>${options}</div>`));
 	}
 
 	getChaptersList(addSelect,console.log);
