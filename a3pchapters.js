@@ -49,7 +49,7 @@
 							result.push(
 							{
 								name: 'Temporada ' + (i+1),
-								chapters: arguments[i][0][1]
+								chapters: arguments[i][0][1].reverse()
 							})
 						}
 						cb(result);
@@ -63,7 +63,7 @@
 	function createSelect(season){
 		let selectText = '<select style="width: 170px;padding: 0.8em;border-radius: 0.5em;border: none;color: white;font-size: 1.7em;background-color: #333;margin: 5px 5px; cursor:pointer" onChange="window.location.href=this.value">'
 		selectText += '<option >'+season.name+'</option>';
-		for(let chapter of season.chapters.reverse()){
+		for(let chapter of season.chapters){
 			selectText += `<option value="${chapter.hrefHtml}">${chapter.title}</option>`;
 		}
 		selectText += "</select>";
@@ -72,6 +72,7 @@
 
 	function addSelect(chaptersList){
 		//console.log(chaptersList);
+		sessionStorage.chaptersList = JSON.stringify(chaptersList);
 		let options = "";
 		for(let season of chaptersList){
 			options += createSelect(season);
@@ -81,6 +82,34 @@
 		parent.append($(`<div><br><br><br><br><br>${options}</div>`));
 	}
 
+	function getNextChapterUrl(){
+		if(sessionStorage.chaptersList){
+			let chaptersList = JSON.parse(sessionStorage.chaptersList);
+			const regex = /temporada-([0-9])\/capitulo-([0-9]+)/g;
+			let match = regex.exec(window.location.href);
+			let season = (+match[1]);
+			let episode = (+match[2])+1;
+			let episodesLength = chaptersList[season-1].chapters.length;
+			if(episodesLength === episode-1){
+				season += 1;
+				episode = 1;
+			}
+			//if there's no such season it raises an error and stop the execution
+			return chaptersList[season-1].chapters[episode-1].hrefHtml
+		}
+	}
+
+	function checkEnd(){
+		try{
+			if(player.stateModel.vstate === "STATE_END" && sessionStorage.chaptersList){
+				window.location.href = getNextChapterUrl();
+			}
+		}catch(e){}
+	}
+
+	//Chapters list
 	getChaptersList(addSelect,console.log);
+	//Autoplay
+	setInterval(checkEnd,2000);
 
 })();
